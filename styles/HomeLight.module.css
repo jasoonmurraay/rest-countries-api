@@ -1,0 +1,82 @@
+.mainBody {
+    background-color: #fafafa;
+}
+
+.searchAndFilter {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+.search::placeholder {
+    color: black;
+}
+
+.search {
+    padding: 1rem;
+    background-color: white;
+    border-radius: 10px;
+    border: none;
+}
+
+.search:focus {
+    outline: none;
+}
+
+.dropdownBtn {
+    background-color:  white;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 0;
+    padding: 0.5rem;
+    height: 100%;
+}
+
+.dropdownBtn:hover {
+    cursor: pointer;
+}
+
+.filterList {
+    position: absolute;
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0.25rem;
+    border-radius: 10px;
+}
+
+.filterItem {
+    background-color: white;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.filterItem:nth-child(1) {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.filterItem:last-child {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.filterSelector {
+    background-color: white;
+    border: none;
+}
+
+.filterSelector:hover {
+    cursor: pointer;
+}
+
+.countryList {
+    padding-left: 0;
+    margin: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.countryCard {
+    list-style-type: none;
+    padding-left: 0;
+}

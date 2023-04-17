@@ -1,0 +1,21 @@
+.cardBody {
+    background-color: #2b3743;
+    color: white;
+    margin: 1rem;
+    border: none;
+    border-radius: 10px;
+    width: 280px;
+    height: 450px;
+    box-shadow: 0 5px 5px grey;
+}
+
+.flag {
+    height: 200px;
+    width: 280px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.cardContent {
+    padding: 0 1rem;
+}

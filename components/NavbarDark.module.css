@@ -1,0 +1,22 @@
+.navBody {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #2b3743;
+    color: #fcffff;
+}
+
+.header {
+    padding: 1rem;
+}
+
+.button {
+    margin: 1rem;
+    background-color: transparent;
+    border: none;
+    color: #fcffff;
+}
+
+.button:hover {
+    cursor: pointer;
+}
