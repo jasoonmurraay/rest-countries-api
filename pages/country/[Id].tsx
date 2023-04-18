@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, MouseEvent } from "react";
 import axios from "axios";
 import getBorders from "../api/getBorders";
 import Link from "next/link";
@@ -44,11 +44,12 @@ const CountryPage = () => {
   }, [data]);
   const renderLanguages = () => {
     let string = "";
-    if (data?.languages) {
-      for (let i = 0; i < Object.values(data?.languages).length; i++) {
-        string +=
-          Object.values(data?.languages)[i] +
-          (i === Object.values(data?.languages).length - 1 ? "" : ", ");
+    const { languages } = data || {};
+    if (languages) {
+      for (let [, value] of Object.entries(languages)) {
+        string += `${value}${
+          value === Object.values(languages).slice(-1)[0] ? "" : ", "
+        }`;
       }
     }
     return string;
@@ -77,15 +78,28 @@ const CountryPage = () => {
     return string;
   };
 
+  const redirectHandler = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (event.target instanceof HTMLButtonElement) {
+      let route = event.target.value;
+      router.push(`${route}`);
+    }
+  };
+
   const renderBorders = () => {
     return borders?.map((country) => {
       return (
         <li className={styles.borderItem} key={country.flags.png}>
-          <Link href={`/country/${country.cca2}`}>
-            <button className={styles.borderButton}>
-              {country.name.common}
-            </button>
-          </Link>
+          <button
+            onClick={redirectHandler}
+            value={country.cca2}
+            className={styles.borderButton}
+            role="button"
+            type="button"
+            aria-label={`View details for ${country.name.common}`}
+          >
+            {country.name.common}
+          </button>
         </li>
       );
     });
@@ -96,11 +110,22 @@ const CountryPage = () => {
       <Navbar />
       {data && (
         <div className={styles.window}>
-          <Link href="/">
-            <button className={styles.backButton}>&larr; Back</button>
-          </Link>
+          <button
+            onClick={redirectHandler}
+            value="/"
+            className={styles.backButton}
+            tabIndex={0}
+            title="Go back to previous page"
+          >
+            &larr; Back
+          </button>
+
           <main className={styles.body}>
-            <img className={styles.flag} src={data.flags.png} />
+            <img
+              className={styles.flag}
+              src={data.flags.png}
+              alt={`${data.name.common} flag`}
+            />
             <div className={styles.content}>
               <h1 className={styles.header}>{data.name.common}</h1>
               <div className={styles.subContent}>
@@ -112,39 +137,48 @@ const CountryPage = () => {
                         : "Native Name: "}{" "}
                     </span>
                     {renderNativeNames()}
+                    <span className="sr-only">
+                      {Object.values(data?.name.nativeName).length > 1
+                        ? " Native Names: "
+                        : " Native Name: "}
+                      {renderNativeNames()}
+                    </span>
                   </p>
                 )}
 
-                <p>
+                <p aria-label={`Population of ${data.name.common}`}>
                   <span className={styles.property}>Population: </span>
                   {insertCommas(data.population)}
                 </p>
-                <p>
+                <p aria-label={`Region of ${data.name.common}`}>
                   <span className={styles.property}>Region: </span>
                   {data.region}
                 </p>
-                <p>
+                <p aria-label={`Subregion of ${data.name.common}`}>
                   <span className={styles.property}>Sub Region: </span>
                   {data.subregion}
                 </p>
-                <p>
+                <p aria-label={`Capital of ${data.name.common}`}>
                   <span className={styles.property}>Capital: </span>
                   {data.capital}
                 </p>
-                <p>
+                <p aria-label={`Top level domain of ${data.name.common}`}>
                   <span className={styles.property}>Top Level Domain: </span>
                   {data.tld}
                 </p>
-                <p>
+                <p aria-label={`Currencies of ${data.name.common}`}>
                   <span className={styles.property}>Currencies: </span>
                   {renderCurrencies()}
                 </p>
-                <p>
+                <p aria-label={`Languages of ${data.name.common}`}>
                   <span className={styles.property}>Languages: </span>
                   {renderLanguages()}
                 </p>
               </div>
-              <div className={styles.borderDiv}>
+              <div
+                aria-label={`Countries that border ${data.name.common}`}
+                className={styles.borderDiv}
+              >
                 <h4 className={styles.borderHeader}>Border Countries: </h4>
                 <ul className={styles.borderList}>{renderBorders()}</ul>
               </div>

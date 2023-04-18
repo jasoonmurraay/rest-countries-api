@@ -34,7 +34,7 @@ export interface CountryData {
   capital: Array<string>;
   capitalInfo: Array<Number>;
   car: Object;
-  cca2: String;
+  cca2: string;
   cca3: String;
   ccn3: String;
   cioc: String;

@@ -14,6 +14,7 @@ import {
   Name,
   NativeName,
 } from "@/interfaces";
+import Head from "next/head";
 
 export default function Home() {
   const { theme } = useContext(ThemeContext);
@@ -83,7 +84,12 @@ export default function Home() {
         const capital = country.capital;
         return (
           <li className={styles.countryCard} key={country.flags.png}>
-            <Link className={styles.link} href={`/country/${country.cca2}`}>
+            <a
+              tabIndex={1}
+              aria-label={`Data for and a link to the page for ${country.name.common}`}
+              className={styles.link}
+              href={`/country/${country.cca2}`}
+            >
               <Country
                 flags={country.flags}
                 name={country.name}
@@ -119,7 +125,7 @@ export default function Home() {
                 translations={country.translations}
                 unMember={country.unMember}
               />
-            </Link>
+            </a>
           </li>
         );
       });
@@ -128,23 +134,42 @@ export default function Home() {
   return (
     <>
       <Navbar />
+      <Head>
+        <title aria-label="Page title: Countries Home Page">
+          Countries Home Page
+        </title>
+      </Head>
       <main className={styles.mainBody}>
-        <div className={styles.searchAndFilter}>
+        <h1 aria-label="Search for a country!" className={styles.mainHeader}>
+          Search For a Country!
+        </h1>
+        <div
+          aria-label="Search for countries, or filter by region"
+          className={styles.searchAndFilter}
+        >
           <input
             ref={searchRef}
             placeholder="Search for a country..."
             className={styles.search}
             type="text"
             onChange={searchCountryHandler}
+            aria-label="Country search bar"
           />
           <div className={styles.filter}>
-            <button className={styles.dropdownBtn} onClick={toggleDropdown}>
+            <button
+              aria-haspopup
+              aria-aria-labelledby="Select to filter countries by region"
+              className={styles.dropdownBtn}
+              onClick={toggleDropdown}
+            >
               Filter by Region
             </button>
             {dropdownOpen && (
-              <ul className={styles.filterList}>
+              <ul aria-expanded className={styles.filterList}>
                 <li className={styles.filterItem}>
                   <button
+                    aria-label="Filter by countries in the whole world"
+                    tabIndex={0}
                     className={styles.filterSelector}
                     onClick={filterCountryHandler}
                   >
@@ -153,6 +178,8 @@ export default function Home() {
                 </li>
                 <li className={styles.filterItem}>
                   <button
+                    tabIndex={0}
+                    aria-label="Filter by countries in Africa"
                     className={styles.filterSelector}
                     onClick={filterCountryHandler}
                   >
@@ -161,6 +188,8 @@ export default function Home() {
                 </li>
                 <li className={styles.filterItem}>
                   <button
+                    tabIndex={0}
+                    aria-label="Filter by countries in the Americas"
                     className={styles.filterSelector}
                     onClick={filterCountryHandler}
                   >
@@ -169,6 +198,8 @@ export default function Home() {
                 </li>
                 <li className={styles.filterItem}>
                   <button
+                    tabIndex={0}
+                    aria-label="Filter by countries in Asia"
                     className={styles.filterSelector}
                     onClick={filterCountryHandler}
                   >
@@ -177,6 +208,8 @@ export default function Home() {
                 </li>
                 <li className={styles.filterItem}>
                   <button
+                    tabIndex={0}
+                    aria-label="Filter by countries in Europe"
                     className={styles.filterSelector}
                     onClick={filterCountryHandler}
                   >
@@ -185,6 +218,8 @@ export default function Home() {
                 </li>
                 <li className={styles.filterItem}>
                   <button
+                    tabIndex={0}
+                    aria-label="Filter by countries in Oceania"
                     className={styles.filterSelector}
                     onClick={filterCountryHandler}
                   >
