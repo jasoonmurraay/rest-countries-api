@@ -1,0 +1,129 @@
+
+.window {
+    background-color: #202d36;
+    color: white;
+}
+.backButton {
+    background-color: #2b3743;
+    border: none;
+    margin: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 5px grey;
+    color: white;
+}
+
+.backButton:hover {
+    cursor: pointer;
+    transform: translateY(-3px);
+}
+
+.body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flag {
+    padding-right: 10%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.subContent {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+ .subContent p {
+    max-width: 25vmin;
+    min-width: 25vmax;
+}
+
+.header {
+    margin: 0;
+}
+
+.property {
+    font-weight: 700;
+}
+
+.borderDiv {
+    display: flex;
+    
+}
+
+.borderHeader {
+    max-width: 40%;
+    margin-right: 1rem
+}
+
+.borderList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    width: 50%;
+}
+
+.borderItem {
+    margin: 0.5rem
+}
+
+.borderButton {
+    background-color: #2b3743;
+    border: none;
+    border-radius: 5px;
+    padding: 0.25rem 0.5rem;
+    color: white;
+    box-shadow: 0 0 5px grey;
+}
+
+.borderButton:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+
+@media (max-width: 988px) {
+    .body {
+        display: flex;
+        flex-direction: column;
+        width: 100vmin;
+        align-self: center;
+    }
+    .flag {
+        padding-right: 0;
+        align-self: flex-start;
+        width: 50%;
+    }
+    .subContent {
+        width: 100%;
+        align-self: center;
+    }
+    .content, .subContent, .header {
+        display: flex;
+        flex-direction: column;
+        align-self: start;
+    }
+    
+    .header {
+        margin-top: 1rem;
+        align-self: flex-start;
+    }
+    .borderDiv {
+        flex-direction: column;
+        align-items: center;
+    }
+    .borderHeader, .borderList {
+        align-self: flex-start;
+    }
+    .borderList {
+        margin-top: 0;
+    }
+}

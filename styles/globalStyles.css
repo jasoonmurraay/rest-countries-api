@@ -1,4 +1,22 @@
+html,
+body,
+body > div:first-child,
+div#__next,
+div#__next > div {
+  height: 100%;
+}
+
 body {
     margin: 0;
     padding: 0;
+}
+
+@media (max-width: 988px) {
+    html,
+body,
+body > div:first-child,
+div#__next,
+div#__next > div {
+  height: auto;
+}
 }

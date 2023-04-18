@@ -2,18 +2,28 @@ import Navbar from "@/components/Navbar";
 import Country from "@/components/Country";
 import LightClasses from "../styles/HomeLight.module.css";
 import DarkClasses from "../styles/HomeDark.module.css";
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect, useContext, MouseEvent } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { ThemeContext } from "@/context/themeContext";
+import {
+  CountryData,
+  Currencies,
+  Flags,
+  Languages,
+  Name,
+  NativeName,
+} from "@/interfaces";
 
 export default function Home() {
   const { theme } = useContext(ThemeContext);
-  let styles;
+  let styles: {
+    readonly [x: string]: string;
+  };
   theme === "light" ? (styles = LightClasses) : (styles = DarkClasses);
-  const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState<CountryData[]>([]);
   const allCountries = async () => {
-    function compare(a, b) {
+    function compare(a: CountryData, b: CountryData) {
       if (a.name.common < b.name.common) {
         return -1;
       } else if (a.name.common > b.name.common) {
@@ -31,52 +41,83 @@ export default function Home() {
     allCountries();
   }, []);
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const searchRef = useRef();
+  console.log("country data: ", countries);
 
-  console.log("Countries state: ", countries);
+  const [dropdownOpen, setDropdownOpen] = useState<Boolean>(false);
+  const searchRef = useRef<any>();
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
   const searchCountryHandler = async () => {
-    if (searchRef.current.value.length) {
+    if (searchRef.current) {
       const query = searchRef.current.value;
-      await axios
-        .get(`https://restcountries.com/v3.1/name/${query}`)
-        .then((data) => {
-          setCountries(data.data);
-        })
-        .catch(setCountries([]));
-    } else {
-      allCountries();
+      if (query.length) {
+        await axios
+          .get(`https://restcountries.com/v3.1/name/${query}`)
+          .then((data) => {
+            setCountries(data.data);
+          });
+      } else {
+        allCountries();
+      }
     }
   };
-  const filterCountryHandler = async (event) => {
+  const filterCountryHandler = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    let query = event.target.innerHTML;
-    if (query !== "Whole World") {
-      await axios
-        .get(`https://restcountries.com/v3.1/region/${query}`)
-        .then((data) => setCountries(data.data), setDropdownOpen(false))
-        .catch(setCountries([]));
-    } else {
-      allCountries().then(setDropdownOpen(false));
+    if (event.target instanceof Element) {
+      let query = event.target.innerHTML;
+      if (query !== "Whole World") {
+        await axios
+          .get(`https://restcountries.com/v3.1/region/${query}`)
+          .then((data: any) => setCountries(data.data));
+      } else {
+        allCountries();
+      }
+      setDropdownOpen(false);
     }
   };
   const renderCountries = () => {
-    if (countries.length) {
+    if (countries) {
       return countries.map((country) => {
+        const capital = country.capital;
         return (
-          <li className={styles.countryCard} key={country.idd}>
-            <Link href={`/country/${country.cioc}`}>
+          <li className={styles.countryCard} key={country.flags.png}>
+            <Link className={styles.link} href={`/country/${country.cca2}`}>
               <Country
                 flags={country.flags}
-                name={country.name.common}
+                name={country.name}
                 population={country.population}
                 region={country.region}
-                capital={country.capital}
-                theme={theme}
+                capital={capital}
+                altSpellings={country.altSpellings}
+                area={country.area}
+                borders={country.borders}
+                capitalInfo={country.capitalInfo}
+                car={country.car}
+                cca2={country.cca2}
+                cca3={country.cca3}
+                ccn3={country.ccn3}
+                cioc={country.cioc}
+                coatOfArms={country.coatOfArms}
+                continents={country.continents}
+                currencies={country.currencies}
+                demonyms={country.demonyms}
+                fifa={country.fifa}
+                flag={country.flag}
+                idd={country.idd}
+                independent={country.independent}
+                landlocked={country.landlocked}
+                languages={country.languages}
+                latlng={country.latlng}
+                maps={country.maps}
+                startOfWeek={country.startOfWeek}
+                status={country.status}
+                subregion={country.subregion}
+                timezones={country.timezones}
+                tld={country.tld}
+                translations={country.translations}
+                unMember={country.unMember}
               />
             </Link>
           </li>
